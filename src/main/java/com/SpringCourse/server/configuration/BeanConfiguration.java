@@ -1,6 +1,7 @@
 package com.SpringCourse.server.configuration;
 
 
+import com.SpringCourse.server.repository.IForecastRepository;
 import com.SpringCourse.server.service.IPogodynka;
 import com.SpringCourse.server.service.Pogodynka;
 import com.SpringCourse.server.service.PrognozaPogody;
@@ -14,8 +15,10 @@ public class BeanConfiguration {
     @Value("${property.regiony}")
     private String [] regiony;
 
-     @Bean
-    public IPogodynka pogodynkaService() {
+
+
+    @Bean
+    public IPogodynka pogodynkaService(IForecastRepository repository) {
 
         PrognozaPogody[] mozliwePogody= new PrognozaPogody[]{
                 new PrognozaPogody(10,10,10),
@@ -28,7 +31,9 @@ public class BeanConfiguration {
                 new PrognozaPogody(),
                 new PrognozaPogody()
         };
-        return new Pogodynka(regiony,mozliwePogody);
+        return new Pogodynka(regiony,mozliwePogody, repository);
     }
+
+
 }
 
